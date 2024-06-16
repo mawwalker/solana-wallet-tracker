@@ -4,6 +4,8 @@ import requests
 from config.conf import http_api_config, gmgn_config
 from loguru import logger
 
+PUMP_FUN_ADDRESS = "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
+
 def parse_solana_transaction(transaction_data):  
     # Initialize the result dictionary  
     result = {  
@@ -16,7 +18,29 @@ def parse_solana_transaction(transaction_data):
   
     # Extract account keys  
     pre_token_balances = transaction_data['result']['meta']['preTokenBalances']  
-    post_token_balances = transaction_data['result']['meta']['postTokenBalances']  
+    post_token_balances = transaction_data['result']['meta']['postTokenBalances']
+    
+    preBalances = transaction_data['result']['meta']['preBalances']
+    postBalances = transaction_data['result']['meta']['postBalances']
+    logMessages = transaction_data['result']['meta']['logMessages']
+    pump_fun_str = f"Program {PUMP_FUN_ADDRESS} success"
+    
+    if pump_fun_str in logMessages:
+        logger.info(f"Parsing pump.fun transaction")
+        balance_change = [post - pre for pre, post in zip(preBalances, postBalances)][:4]
+        result['who'] = post_token_balances[-1]['owner']
+        result['token_id'] = post_token_balances[-1]['mint']
+        if balance_change[0] > 0:
+            # sell
+            result['trade_direction'] = 'sell'
+            
+        else:
+            # buy
+            result['trade_direction'] = 'buy'
+        result['token_amount'] = - balance_change[0]
+        result['sol_amount'] = - balance_change[-1] / 1e9
+        return result
+        
   
     # Initialize dictionaries to track accountIndex and mint  
     pre_dict = {item['accountIndex']: item for item in pre_token_balances}  
