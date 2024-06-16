@@ -1,0 +1,12 @@
+bot_token:
+wss:
+  url: 
+http:
+  url: 
+  ak: 
+    header: 
+    value: 
+gmgn:
+  token_info:
+    sol: 
+      url: https://gmgn.ai/defi/quotation/v1/tokens/sol

@@ -1,0 +1,17 @@
+version: 3
+
+services:
+  bot:
+    image: wallet-tracker:latest
+    # ports:
+    #   - "8080:80"
+    # volumes:
+    #   - ./web:/usr/share/nginx/html
+    # networks:
+    #   - mynetwork
+    environment:
+      - BOT_TOKEN=${BOT_TOKEN}
+      - WSS_URL=${WSS_URL}
+      - HTTP_API_URL=${HTTP_API_URL}
+      - HTTP_API_AK_HEADER=${HTTP_API_AK_HEADER}
+      - HTTP_API_AK_VALUE=${HTTP_API_AK_VALUE}

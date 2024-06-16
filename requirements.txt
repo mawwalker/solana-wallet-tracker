@@ -1,0 +1,8 @@
+aiosqlite==0.20.0
+loguru==0.7.2
+python-telegram-bot==21.3
+PyYAML==6.0.1
+PyYAML==6.0.1
+Requests==2.32.3
+websockets==11.0.3
+python-dotenv==1.0.1
