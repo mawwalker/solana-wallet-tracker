@@ -2,7 +2,7 @@ version: 3
 
 services:
   bot:
-    image: wallet-tracker:latest
+    image: matrixarcher/solana-wallet-tracker:latest
     # ports:
     #   - "8080:80"
     # volumes:
