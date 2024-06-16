@@ -1,5 +1,6 @@
 import json
 import datetime
+import time
 import requests
 from config.conf import http_api_config, gmgn_config
 from loguru import logger
@@ -126,7 +127,13 @@ def log2trasaction_parse(signature):
             {"encoding": "json", "maxSupportedTransactionVersion": 0}
         ]
     }
-    response = requests.post(url, headers=headers, data=json.dumps(data))
+    for i in range(5):
+        # 重试5次
+        response = requests.post(url, headers=headers, data=json.dumps(data))
+        if response.status_code == 200 and response.json().get('result', None) is not None:
+            break
+        time.sleep(0.2)
+    # response = requests.post(url, headers=headers, data=json.dumps(data))
     transaction_data = response.json()
     logger.info(f"original solana transaction info: {transaction_data}")
     
