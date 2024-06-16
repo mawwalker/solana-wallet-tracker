@@ -5,8 +5,8 @@ services:
     image: matrixarcher/solana-wallet-tracker:latest
     # ports:
     #   - "8080:80"
-    # volumes:
-    #   - ./web:/usr/share/nginx/html
+    volumes:
+      - ./data:/app/data
     # networks:
     #   - mynetwork
     environment:

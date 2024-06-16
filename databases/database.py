@@ -1,6 +1,6 @@
 import aiosqlite
 from loguru import logger
-DATABASE_FILE = "subscriptions.db"
+DATABASE_FILE = "data/subscriptions.db"
   
 async def create_tables():  
     logger.info("Creating tables...")
